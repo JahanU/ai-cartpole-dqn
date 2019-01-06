@@ -46,8 +46,7 @@ def load_CNN():
 	return model
 
 
-""" List of functions required for DQN: """
-
+# List of functions required for DQN: 
 # Stores a list of all previous experiances and observation
 # Used to re-train the model again with previous experiances.
 def remember(state, action, reward, next_state, done): 
@@ -79,7 +78,6 @@ def replay(batch_size, epsilon, model):
 		if done: # If done, make our target reward
 			q_update[0][action] = reward 
 		else: # Predict the future discounted reward
-		# Predict the future discounted reward
 		# Calculating new Q value by taking the Max Q for a given action (predicted valaue of the next best state)
 		# & multiplying it by the gamma value, and then lastly storing it to the current state reward.
 			q_update[0][action] = reward + gamma * np.max(model.predict(next_state)[0])
@@ -87,6 +85,7 @@ def replay(batch_size, epsilon, model):
 		states_batch.append(state[0]) 	# Adding to the states list
 		q_values.append(q_update[0])	# Adding to the Q values list
 
+	""" Step 3: Connection of the game to the network 10% """
 	# Train the neural network using the states list and Q values list 
 	model.fit(np.array(states_batch), np.array(q_values), verbose = 0)
 
@@ -161,7 +160,6 @@ def run():
 
 if __name__ == "__main__":
 	run()
-
 
 
 
