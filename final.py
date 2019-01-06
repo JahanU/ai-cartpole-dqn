@@ -19,7 +19,7 @@ epislon_decay = 0.995 			# Used to lower the epsilon values
 learning_rate = 0.01 			# Learning rate
 learning_rate_decay = 0.01 		# Used to lower the learning rate value value
 batch_size = 64 				# Used as the size limit of the previous experiances
-memory = deque(maxlen = 30000)	# Stores all experiances
+memory = deque(maxlen = 1000)	# Stores all experiances
 
 
 def load_game(): 
@@ -100,8 +100,9 @@ def run():
 
 	env = load_game() # Stores the enviorment
 	model = load_CNN() # Stores the trained model
+	# env = gym.wrappers.Monitor(env, "helpvideos", force = True) # Used to save the agent playing
 
-	number_episodes = 30000			# Total episodes to play
+	number_episodes = 1000			# Total episodes to play
 	win_goal = 195					# Average score of past 100 episodes must be higher than 195
 	highest_score = 0 				# Stores the highest score reached by the DQN
 
@@ -141,7 +142,7 @@ def run():
 			if eps % 100 is 0 and eps is not 0:
 				print("Episode {} - average score over last 100 episodes was: {}".format(eps, average_score))
 
-			if (average_score > 450):
+			if (average_score > 300):
 				print("Reached the target of: {}. In {} episodes. Average score was: {}. ".format(win_goal, eps, average_score))
 				model.save("trained_DQN_average_400.p5")
 				print("Saved trained DQN model!")
@@ -160,7 +161,6 @@ def run():
 
 if __name__ == "__main__":
 	run()
-
 
 
 
