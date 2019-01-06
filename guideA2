@@ -1,0 +1,25 @@
+Install pip:
+	sudo easy_install pip
+
+
+New directory
+Git clone cd gym:
+	git clone https://github.com/openai/gym.git
+	cd gym
+
+# may need to install virtualenv:
+	sudo pip install virtualenv
+
+create virtual enviroment within gym
+
+	virtualnv venv - "Creates venv"
+
+create python 3.5 enviroment within the already made venv
+	virtualenv -p python3.5 venv
+	python --version - "Check python version"
+
+install tensorflow:
+	pip install tensorflow
+
+install keras:
+	pip install keras
