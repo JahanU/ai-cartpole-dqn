@@ -19,7 +19,7 @@ epislon_decay = 0.995 			# Used to lower the epsilon values
 learning_rate = 0.01 			# Learning rate
 learning_rate_decay = 0.01 		# Used to lower the learning rate value value
 batch_size = 64 				# Used as the size limit of the previous experiances
-memory = deque(maxlen = 2000)	# Stores all experiances
+memory = deque(maxlen = 30000)	# Stores all experiances
 
 
 def load_game(): 
@@ -40,7 +40,7 @@ def load_CNN():
 	model.compile(loss = "mse", optimizer = Adam(lr = learning_rate, decay = learning_rate_decay)) # Create model based on the information above
 
 	# Loads the trained model I have created
-	model = load_model("trained_DQN.p5") 
+	model = load_model("trained_DQN_average_400.p5") 
 	print(model.summary()) # Displays the params at each layer
 	print("Loaded trained DQN Model")
 	return model
@@ -102,19 +102,19 @@ def run():
 	env = load_game() # Stores the enviorment
 	model = load_CNN() # Stores the trained model
 
-	number_episodes = 2000			# Total episodes to play
+	number_episodes = 30000			# Total episodes to play
 	win_goal = 195					# Average score of past 100 episodes must be higher than 195
 	highest_score = 0 				# Stores the highest score reached by the DQN
 
 	# Stores the scores achieved by the agent
 	scores = deque(maxlen = number_episodes)	 # Stores every score of every episode played
 	average_scores_list = deque(maxlen = 100)	 # Stores the last 100 episodes played
-	observation_space = env.observation_space.shape[0] # Values describing the what the env observes, such as cart velocity etc
+	state_size = env.observation_space.shape[0] # Values describing the what the env observes, such as cart velocity etc
 
 	for eps in range(number_episodes):
 
 		state = env.reset() # Resets the state at the start of every game.
-		state = np.reshape(state, [1, observation_space])
+		state = np.reshape(state, [1, state_size])
 		done = False # Reset after every episode
 		i = 0		 # Reset i after every episode, stores how long the agent survived
 
@@ -126,7 +126,7 @@ def run():
 			next_state, reward, done, info = env.step(action)
 			
 			# env.render() # Uncomment to show gameplay
-			next_state = np.reshape(next_state, [1, observation_space])
+			next_state = np.reshape(next_state, [1, state_size])
 			
 			# Remember the previous experiance, such as: (state, action, reward, next_state, done)
 			remember(state, action, reward, next_state, done) 
@@ -142,9 +142,9 @@ def run():
 			if eps % 100 is 0 and eps is not 0:
 				print("Episode {} - average score over last 100 episodes was: {}".format(eps, average_score))
 
-			if (average_score > win_goal):
+			if (average_score > 450):
 				print("Reached the target of: {}. In {} episodes. Average score was: {}. ".format(win_goal, eps, average_score))
-				model.save("trained_DQN.p5")
+				model.save("trained_DQN_average_400.p5")
 				print("Saved trained DQN model!")
 				break
 
