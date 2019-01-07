@@ -19,7 +19,7 @@ epislon_decay = 0.995 			# Used to lower the epsilon values
 learning_rate = 0.01 			# Learning rate
 learning_rate_decay = 0.01 		# Used to lower the learning rate value value
 batch_size = 64 				# Used as the size limit of the previous experiances
-memory = deque(maxlen = 10000)	# Stores all experiances
+memory = deque(maxlen = 1000)	# Stores all experiances
 
 
 def load_game(): 
@@ -103,7 +103,7 @@ def run():
 	model = load_CNN(env) # Stores the trained model
 	# env = gym.wrappers.Monitor(env, "Recording", force = True) # Used to save a video of the agent playing
 
-	number_episodes = 10000			# Total episodes to play
+	number_episodes = 1000			# Total episodes to play
 	win_goal = 195					# Average score of past 100 episodes must be higher than 195
 	highest_score = 0 				# Stores the highest score reached by the DQN
 
