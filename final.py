@@ -28,11 +28,11 @@ def load_game():
 	env = gym.make("CartPole-v1")
 	return env
 
-def load_CNN(): 
+def load_CNN(env): 
 	""" Step 2: Creating a network 20% """
 	# Creating the neural network
 	model = Sequential()	# Creates the foundation of the layers
-	state_size = 4 # Input layer
+	state_size = env.observation_space.shape[0] # Input layer
 	# "Dense" is the basic form of the Neural network layer
 	model.add(Dense(24, input_dim = state_size, activation = "relu")) # Creating the CNN Layers, first with 24 nodes, second with 48 nodes
 	model.add(Dense(48, activation = "relu"))
@@ -40,7 +40,7 @@ def load_CNN():
 	model.compile(loss = "mse", optimizer = Adam(lr = learning_rate, decay = learning_rate_decay)) # Create model based on the information above
 
 	# Loads the trained model I have created
-	model = load_model("trained_DQN_average_400.p5") 
+	#model = load_model("trained_DQN_average_400.p5") 
 	print(model.summary()) # Displays the params at each layer
 	print("Loaded trained DQN Model")
 	return model
@@ -99,7 +99,7 @@ def replay(batch_size, epsilon, model):
 def run():
 
 	env = load_game() # Stores the enviorment
-	model = load_CNN() # Stores the trained model
+	model = load_CNN(env) # Stores the trained model
 	# env = gym.wrappers.Monitor(env, "helpvideos", force = True) # Used to save the agent playing
 
 	number_episodes = 1000			# Total episodes to play
@@ -144,7 +144,7 @@ def run():
 
 			if (average_score > 300):
 				print("Reached the target of: {}. In {} episodes. Average score was: {}. ".format(win_goal, eps, average_score))
-				model.save("trained_DQN_average_400.p5")
+				#model.save("trained_DQN_average_400.p5")
 				print("Saved trained DQN model!")
 				break
 
