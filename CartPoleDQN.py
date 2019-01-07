@@ -126,7 +126,7 @@ def run():
 			# The reward is +1 point for every every the pole is balanced
 			next_state, reward, done, info = env.step(action)
 			
-			# env.render() # Uncomment to show gameplay
+			env.render() # Uncomment to show gameplay
 			next_state = np.reshape(next_state, [1, state_size])
 			
 			# Remember the previous experiance, such as: (state, action, reward, next_state, done)
@@ -136,7 +136,7 @@ def run():
 
 		if done: # Episode is over
 			scores.append(i) # Game is over, stores amount of wins ticks
-			#print("Eps: {} Score: {} ".format(eps, scores[-1]))
+			print("Eps: {} Score: {} ".format(eps, scores[-1]))
 
 			average_scores_list.append(i)
 			average_score = np.mean(average_scores_list)
@@ -162,6 +162,5 @@ def run():
 
 if __name__ == "__main__":
 	run()
-
 
 
